@@ -1,14 +1,52 @@
-import '@/app/ui/global.css';
-import { inter } from '@/app/ui/fonts';
+import type { Metadata } from "next";
+import { Schibsted_Grotesk, Martian_Mono, Geist } from "next/font/google";
+import "./globals.css";
+import { cn } from "@/lib/utils";
+import LightRays from "@/app/components/LightRays";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+const schibstedGrotesk = Schibsted_Grotesk({
+  variable: "--font-schibsted-grotesk",
+  subsets: ["latin"],
+});
+
+const martianMono = Martian_Mono({
+  variable: "--font-martian-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "DevEvent",
+  description: "The Hub for Every Dev Event You Mustn's Miss",
+};
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${schibstedGrotesk.variable} ${martianMono.variable} ${geist.variable} min-h-screen antialiased bg-black text-white`}>
+        <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
+          <LightRays 
+            raysOrigin="top-center"
+            raysColor="#00ffff"
+            raysSpeed={1.5}
+            lightSpread={0.8}
+            rayLength={1.2}
+            followMouse={true}
+            mouseInfluence={0.1}
+            noiseAmount={0.1}
+            distortion={0.05}
+            className="custom-rays"
+          />
+        </div>
+        <main>
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
