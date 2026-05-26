@@ -9,10 +9,13 @@ interface GetAnotherJokeProps {
 
 export default function GetAnotherJoke({currentJoke}: GetAnotherJokeProps) {
     const [favourite, setFavourite] = useState<Joke[]>([])
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
 
     const handleRefresh = () => {
+        setLoading(true)
         router.refresh()
+        setLoading(false)
     }
 
     function addFavourite(){
@@ -24,7 +27,7 @@ export default function GetAnotherJoke({currentJoke}: GetAnotherJokeProps) {
 
     return(
         <>
-            <button onClick={handleRefresh}>Get Another Joke</button>
+            <button onClick={handleRefresh} disabled={loading}>{ loading? 'Loading...' : 'Get Another Joke' }</button>
             <button onClick={addFavourite}>❤️ Favorite</button>
             {favourite.length>0 && (
                 <div>
